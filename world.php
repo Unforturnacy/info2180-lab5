@@ -9,17 +9,36 @@ $dbname = 'world';
 $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
 
 $country = filter_input(INPUT_GET, "country", FILTER_SANITIZE_STRING);
-$country_Search = $conn -> query("SELECT * FROM countries WHERE name LIKE '%$country%'");
+$country_Search = $conn -> query("SELECT  countries.name, countries.continent,countries.independence_year,countries.head_of_state
+                                 FROM countries WHERE countries.name LIKE '%$country%'");
 $results = $country_Search -> fetchAll(PDO::FETCH_ASSOC);
 
 
 
 
-
- 
 ?>
-<ul>
-<?php foreach ($results as $row): ?>
-  <li><?= $row['name'] . ' is ruled by ' . $row['head_of_state']; ?></li>
-<?php endforeach; ?>
-</ul>
+ 
+ <?php if(isset($country)): ?>
+
+<table class = "countryinfo">
+
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th> Continent </th>
+      <th> Independence </th>
+      <th> Head of State </th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($results as $country): ?>
+      <tr>
+        <td><?php print $country["name"]; ?></td>
+        <td><?php print $country["continent"]; ?></td>
+        <td><?php print $country["independence_year"]; ?></td>
+        <td><?php print $country["head_of_state"]; ?></td>
+      </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+<?php endif; ?>
