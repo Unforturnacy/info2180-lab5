@@ -1,6 +1,7 @@
 function searchList()
 {
     var result = document.getElementById("result");
+    var val = document.getElementById("country");
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
         if(req.readyState === XMLHttpRequest.DONE){
@@ -14,7 +15,7 @@ function searchList()
             }
         }
     }
-    req.open("GET","http://localhost/info2180-lab5/world.php", false)
+    req.open("GET",`http://localhost/info2180-lab5/world.php?country=${val.value}`, false)
 
     req.send();
 }
