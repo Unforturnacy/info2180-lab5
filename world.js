@@ -1,11 +1,12 @@
 function searchList()
 {
+    var result = document.getElementById("result");
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
         if(req.readyState === XMLHttpRequest.DONE){
             if(req.status === 200)
             {
-                alert(req.responseText)
+                result.innerHTML = req.responseText
             } 
             else
             {
