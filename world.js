@@ -1,7 +1,9 @@
-function searchList()
+function searchList(query)
 {
+    
+    console.log(query)
     var result = document.getElementById("result");
-    var val = document.getElementById("country");
+    var coun = document.getElementById("country");
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
         if(req.readyState === XMLHttpRequest.DONE){
@@ -15,7 +17,14 @@ function searchList()
             }
         }
     }
-    req.open("GET",`http://localhost/info2180-lab5/world.php?country=${val.value}`, false)
+    if (query == "country")
+    {
+        req.open("GET","http://localhost/info2180-lab5/world.php?country=" + coun.value, false)
+    }
+    else
+    {
+        req.open("GET","http://localhost/info2180-lab5/world.php?country=" + coun.value + "&lookup=cities", false)
+    }
 
     req.send();
 }
@@ -26,6 +35,8 @@ function searchList()
 window.onload = function() {
     console.log("Page loaded");
     var  but = document.getElementById("lookup");
-    but.addEventListener("click", searchList);
+    var  cit = document.getElementById("lookupcit");
+    but.addEventListener("click", searchList.bind(this,"country"));
+    cit.addEventListener("click", searchList.bind(this,"city"));
   
 };
